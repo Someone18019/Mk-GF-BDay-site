@@ -6,149 +6,125 @@
   --pink-hot: #ff1f7a;
   --rose-red: #c2183c;
 }
+
 /* ===== BASE ===== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
 body {
-  background: var(--black);
+  background: radial-gradient(ellipse at center, #2a0610 0%, var(--black) 75%) fixed;
   color: var(--pink-light);
   font-family: "Poppins", sans-serif;
-  overflow-x: hidden;
 }
-.script {
-  font-family: "Great Vibes", cursive;
+.script { font-family: "Great Vibes", cursive; }
+
+/* ===== SCREENS ===== */
+.screen {
+  position: fixed; inset: 0; z-index: 2;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  text-align: center; padding: 2rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
+.screen.active { opacity: 1; pointer-events: auto; }
+.screen.leave { opacity: 0; transform: translateY(-80px); }
+.hint { position: absolute; bottom: 7%; font-size: 0.95rem; animation: pulse 1.5s infinite; }
+@keyframes pulse { 50% { opacity: 0.3; } }
+
 /* ===== INTRO SCREEN ===== */
-#intro {
-  position: fixed;
-  inset: 0;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: radial-gradient(circle, var(--rose-red), var(--black) 70%);
-  cursor: pointer;
-  transition: opacity 1s;
-}
-#intro h1 {
-  font-size: clamp(3rem, 12vw, 6rem);
-  color: var(--pink-hot);
-  text-shadow: 0 0 20px var(--pink-mid);
-}
-#intro p {
-  margin-top: 1rem;
-  animation: pulse 1.5s infinite;
-}
-@keyframes pulse {
-  50% {
-    opacity: 0.4;
-  }
-}
+#intro { z-index: 10; background: radial-gradient(circle, var(--rose-red), var(--black) 70%); cursor: pointer; }
+#intro h1 { font-size: clamp(3rem, 12vw, 6rem); color: var(--pink-hot); text-shadow: 0 0 20px var(--pink-mid); }
+
 /* ===== HERO ===== */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 2rem;
-}
-.hero h2 {
-  font-size: clamp(3rem, 13vw, 7rem);
-  color: var(--pink-hot);
-  text-shadow: 0 0 25px var(--pink-mid);
-}
-.hero h3 {
-  font-size: 2rem;
-  color: var(--pink-mid);
-}
-.hero small {
-  margin-top: 2rem;
-  opacity: 0.7;
-}
-/* ===== PHOTO SECTIONS ===== */
-.moment {
-  min-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  gap: 1.5rem;
-  opacity: 0;
-  transform: translateY(60px);
-  transition: all 1s ease;
-}
-.moment.show {
-  opacity: 1;
-  transform: none;
-}
-.moment img {
-  width: min(85vw, 380px);
-  border-radius: 18px;
-  border: 4px solid var(--pink-mid);
-  box-shadow: 0 0 30px var(--rose-red);
-}
-.moment p {
-  max-width: 420px;
-  text-align: center;
-  font-size: 1.1rem;
-}
-/* ===== LETTER ===== */
-.letter {
-  max-width: 480px;
-  margin: 4rem auto;
-  padding: 2.5rem 2rem;
-  background: var(--pink-light);
-  color: var(--black);
-  border-radius: 12px;
-  box-shadow: 0 0 40px var(--pink-hot);
-  opacity: 0;
-  transform: translateY(60px);
-  transition: all 1s;
-}
-.letter.show {
-  opacity: 1;
-  transform: none;
-}
-.letter p {
-  margin-bottom: 1rem;
-  line-height: 1.6;
-}
-.letter .sign {
-  font-size: 2.5rem;
-  color: var(--rose-red);
-  text-align: right;
-}
-/* ===== FOOTER ===== */
-footer {
-  text-align: center;
-  padding: 4rem 1rem;
-  font-size: 2.5rem;
-  color: var(--pink-hot);
-}
-/* ===== MUSIC BUTTON ===== */
-#musicBtn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 5;
-  background: var(--rose-red);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 1.3rem;
-  cursor: pointer;
+#hero h2 { font-size: clamp(3.5rem, 15vw, 7rem); color: var(--pink-hot); text-shadow: 0 0 25px var(--pink-mid); }
+#hero h3 { font-size: clamp(2rem, 8vw, 3rem); color: var(--pink-mid); }
+#hero.active h2, #hero.active h3 { animation: pop 1s ease-out both; }
+#hero.active h3 { animation-delay: 0.3s; }
+@keyframes pop {
+  0% { transform: scale(0); filter: blur(12px); opacity: 0; }
+  70% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); filter: none; }
 }
 
-/* ===== SCROLL SNAP ===== */
-html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
-.hero, .moment, .letter, footer { scroll-snap-align: center; scroll-snap-stop: always; }
-.moment { min-height: 100vh; transition: all 0.5s ease; }
+/* ===== CARD DECK ===== */
+#cards { position: relative; width: min(78vw, 340px); aspect-ratio: 3 / 4; }
+.card {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  border-radius: 18px; border: 4px solid var(--pink-mid);
+  box-shadow: 0 0 30px var(--rose-red);
+  transition: transform 0.8s cubic-bezier(0.5, -0.3, 0.7, 1), opacity 0.8s;
+}
+
+/* ===== MESSAGE BOX ===== */
+#msgBox {
+  position: absolute; inset: 0; z-index: 20;
+  display: flex; justify-content: center; align-items: center; padding: 2rem;
+  background: rgba(10, 10, 10, 0.75);
+  opacity: 0; pointer-events: none; transition: opacity 0.6s;
+}
+#msgBox.show { opacity: 1; }
+.note {
+  max-width: 420px; padding: 2.5rem 2rem; border-radius: 14px;
+  background: var(--pink-light); color: var(--black);
+  box-shadow: 0 0 40px var(--pink-hot);
+  transform: scale(0.85); transition: transform 0.6s;
+}
+#msgBox.show .note { transform: scale(1); }
+.note h3 { font-size: 2.4rem; color: var(--rose-red); margin-bottom: 1rem; }
+.note p { line-height: 1.6; }
+
+/* ===== LETTER ===== */
+.letter {
+  max-width: 480px; padding: 2.5rem 2rem; border-radius: 12px;
+  background: var(--pink-light); color: var(--black);
+  box-shadow: 0 0 40px var(--pink-hot); text-align: left;
+}
+.letter p { margin-bottom: 1rem; line-height: 1.6; }
+.letter .sign { font-size: 2.5rem; color: var(--rose-red); text-align: right; }
+
+/* ===== FINALE ===== */
+.fly {
+  position: absolute; left: 50%; top: 50%;
+  width: min(55vw, 240px); aspect-ratio: 3 / 4; object-fit: cover;
+  border-radius: 14px; border: 3px solid var(--pink-mid);
+  transition: transform 1.1s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.8s, box-shadow 0.6s, filter 0.6s;
+}
+.fly.glow { box-shadow: 0 0 60px 20px var(--pink-hot); filter: brightness(1.4); }
+#mainPhoto {
+  position: relative; z-index: 5;
+  width: min(80vw, 360px); aspect-ratio: 3 / 4; object-fit: cover;
+  border-radius: 20px; border: 5px solid var(--pink-hot);
+  box-shadow: 0 0 80px var(--pink-hot);
+  transform: scale(0); transition: transform 1s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+#mainPhoto.reveal { transform: scale(1); }
+#finaleText {
+  position: relative; z-index: 5; margin-top: 1.5rem;
+  font-size: clamp(2.8rem, 11vw, 5rem); color: var(--pink-hot); text-shadow: 0 0 25px var(--pink-mid);
+  opacity: 0; transition: opacity 1s 0.8s;
+}
+#finaleText.reveal { opacity: 1; }
+.boom {
+  position: fixed; left: 50%; top: 45%; z-index: 3; pointer-events: none;
+  animation: boom 2.8s ease-out forwards;
+}
+@keyframes boom {
+  0% { transform: translate(-50%, -50%) scale(0.2); opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.3) rotate(var(--r)); opacity: 0; }
+}
+
+/* ===== BACKGROUND DECOR ===== */
+#bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.rise { position: absolute; bottom: -80px; font-size: 2.8rem; opacity: 0.6; animation: rise linear infinite; }
+@keyframes rise { to { transform: translateY(-120vh) rotate(360deg); } }
+.whisper {
+  position: absolute; font-family: "Great Vibes", cursive; font-size: 1.6rem;
+  color: var(--pink-mid); opacity: 0; animation: whisper 6s ease-in-out forwards;
+}
+@keyframes whisper { 20%, 75% { opacity: 0.5; } 100% { opacity: 0; transform: translateY(-20px); } }
+
+/* ===== MUSIC BUTTON ===== */
+#musicBtn {
+  position: fixed; bottom: 20px; right: 20px; z-index: 30;
+  width: 50px; height: 50px; border: none; border-radius: 50%;
+  background: var(--rose-red); color: #fff; font-size: 1.3rem; cursor: pointer;
+}
