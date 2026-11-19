@@ -1,0 +1,154 @@
+/* ===== THEME COLOURS ===== */
+:root {
+  --black: #0a0a0a;
+  --pink-light: #ffc2d9;
+  --pink-mid: #ff6fa8;
+  --pink-hot: #ff1f7a;
+  --rose-red: #c2183c;
+}
+/* ===== BASE ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background: var(--black);
+  color: var(--pink-light);
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+}
+.script {
+  font-family: "Great Vibes", cursive;
+}
+/* ===== INTRO SCREEN ===== */
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle, var(--rose-red), var(--black) 70%);
+  cursor: pointer;
+  transition: opacity 1s;
+}
+#intro h1 {
+  font-size: clamp(3rem, 12vw, 6rem);
+  color: var(--pink-hot);
+  text-shadow: 0 0 20px var(--pink-mid);
+}
+#intro p {
+  margin-top: 1rem;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.4;
+  }
+}
+/* ===== HERO ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+}
+.hero h2 {
+  font-size: clamp(3rem, 13vw, 7rem);
+  color: var(--pink-hot);
+  text-shadow: 0 0 25px var(--pink-mid);
+}
+.hero h3 {
+  font-size: 2rem;
+  color: var(--pink-mid);
+}
+.hero small {
+  margin-top: 2rem;
+  opacity: 0.7;
+}
+/* ===== PHOTO SECTIONS ===== */
+.moment {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  gap: 1.5rem;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 1s ease;
+}
+.moment.show {
+  opacity: 1;
+  transform: none;
+}
+.moment img {
+  width: min(85vw, 380px);
+  border-radius: 18px;
+  border: 4px solid var(--pink-mid);
+  box-shadow: 0 0 30px var(--rose-red);
+}
+.moment p {
+  max-width: 420px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+/* ===== LETTER ===== */
+.letter {
+  max-width: 480px;
+  margin: 4rem auto;
+  padding: 2.5rem 2rem;
+  background: var(--pink-light);
+  color: var(--black);
+  border-radius: 12px;
+  box-shadow: 0 0 40px var(--pink-hot);
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 1s;
+}
+.letter.show {
+  opacity: 1;
+  transform: none;
+}
+.letter p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+.letter .sign {
+  font-size: 2.5rem;
+  color: var(--rose-red);
+  text-align: right;
+}
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  padding: 4rem 1rem;
+  font-size: 2.5rem;
+  color: var(--pink-hot);
+}
+/* ===== MUSIC BUTTON ===== */
+#musicBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 5;
+  background: var(--rose-red);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+/* ===== SCROLL SNAP ===== */
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+.hero, .moment, .letter, footer { scroll-snap-align: center; scroll-snap-stop: always; }
+.moment { min-height: 100vh; transition: all 0.5s ease; }
