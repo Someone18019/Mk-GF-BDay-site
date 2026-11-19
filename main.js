@@ -7,7 +7,7 @@ const PHOTOS = [
   { src: "images/MKGF4.jpeg", title: "You're the best thing that happened to me in 22 years.", text: "Of all the years I've lived, none of them made sense until you." },
   { src: "images/MKGFFAVPERSON.jpeg" },
 ];
-const WHISPERS = ["you're so loved", "always & forever", "bubz ♡", "my favourite person", "so beautiful", "forever yours", "happy birthday ♡", "my sunlight"];
+const WHISPERS = ["you're so loved", "always & forever", "bubz ♡", "my favourite person", "so beautiful", "forever yours", "happy birthday ♡", "my sunlight", "my hope", "my reason", "my everything", "birthday girl 🎂", "you deserve the world", "proud of you", "my peace", "only you ♡", "pretty girl", "22 & thriving", "loved endlessly", "mine forever 💕"];
 const colours = ["#ffc2d9", "#ff6fa8", "#ff1f7a", "#c2183c"];
 const $ = (s) => document.querySelector(s);
 
@@ -47,12 +47,7 @@ function emojiBoom(count, minSize, maxSize) {
 }
 
 /* ===== MUSIC ===== */
-const song = $("#song"), btn = $("#musicBtn");
-btn.addEventListener("click", (e) => {
-  e.stopPropagation();
-  song.paused ? song.play() : song.pause();
-  btn.textContent = song.paused ? "🔇" : "🎵";
-});
+const song = $("#song");
 
 /* ===== INTRO ===== */
 $("#intro").addEventListener("click", () => {
@@ -113,10 +108,8 @@ let finaleStarted = false, touchY = 0;
 function goLetter() {
   show("#letterScreen");
   const s = $("#letterScreen");
-  s.addEventListener("wheel", (e) => { if (e.deltaY > 0) startFinale(); });
-  s.addEventListener("touchstart", (e) => (touchY = e.touches[0].clientY));
-  s.addEventListener("touchend", (e) => { if (touchY - e.changedTouches[0].clientY > 40) startFinale(); });
-  s.addEventListener("click", startFinale);
+s.addEventListener("wheel", (e) => { if (Math.abs(e.deltaY) > 0) startFinale(); });  s.addEventListener("touchstart", (e) => (touchY = e.touches[0].clientY));
+s.addEventListener("touchend", (e) => { if (Math.abs(touchY - e.changedTouches[0].clientY) > 40) startFinale(); });  s.addEventListener("click", startFinale);
 }
 
 /* ===== FINALE ===== */
@@ -181,3 +174,6 @@ setInterval(() => {
   bg.appendChild(w);
   setTimeout(() => w.remove(), 6000);
 }, 1800);
+
+/* ===== REPLAY ===== */
+$("#replay").addEventListener("click", () => location.reload());
